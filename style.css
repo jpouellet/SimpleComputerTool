@@ -1,0 +1,79 @@
+body {
+	background: #eaeaea;
+}
+
+textarea {
+	font-family: monospace;
+	display: block;
+}
+
+h1 {
+	margin-bottom: 0px;
+}
+
+p {
+	margin: 0px;
+}
+
+p span {
+	color: #7f7f7f;
+}
+
+p a {
+	color: #7f7fff;
+}
+
+h2 {
+	margin-bottom: 0px;
+	margin-top: 30px;
+}
+
+#warnings {
+	color: #bb0000;
+	margin-top: 25px;
+}
+
+th {
+	padding: 10px;
+}
+
+#code_out table {
+	display: inline-block;
+}
+
+#code_out td {
+	padding-left: 10px;
+	font-family: monospace;
+}
+
+#code_out table:first-child td {
+	text-align: right;
+	user-select: none;
+
+	/* cause some people don't update their browsers */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+#code_out td:last-child > span {
+	position: absolute;
+	left: -100px;
+}
+
+fieldset {
+	border: 1px solid #7f7f7f;
+	padding: 3px;
+	display: inline-block;
+}
+
+label {
+	display: block;
+}
+
+h3 {
+	font-size: 12pt;
+	margin: 0px;
+}

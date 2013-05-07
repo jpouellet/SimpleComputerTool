@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple Computer Tool</title>
+
+	<meta name="description" content="A Simple Computer assembler and simulator." />
+	<meta name="author" content="Jean-Philippe Ouellet" />
+
+	<script type="text/javascript" src="util.js"></script>
+	<script type="text/javascript" src="cpu.js"></script>
+	<script type="text/javascript" src="assembler.js"></script>
+	<script type="text/javascript" src="simulator.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+
+<h1>Simple Computer Tool</h1>
+<p><span>Send feedback to</span> Jean-Philippe Ouellet <a href="mailto:jpo@vt.edu">&lt;jpo@vt.edu&gt;</a></p>
+
+<h2>Code (assembly or bytecode)</h2>
+<textarea id="code_in" rows="24" cols="80">
+// Comments start with // or #
+// Comments may appear on the same line as instructions
+//
+// Assembly instructions are specified like so:
+//     MNEMONIC OP[, OP[, OP]]
+//
+// Bytecode instructions are specified as 4 hex digits
+//
+// Assembly and bytecode may be mixed at will
+// (useful when implementing new instructions)
+//
+// Values are given in C-style syntax:
+//     0xBEEF for base 16
+//     1984   for base 10
+//     \007   for base 8
+//
+// Labels are defined like so:
+//     somewhere:
+// and can be referenced like so:
+//     JMP somewhere
+//
+// Additional whitespace is allowed anywhere.
+//
+// To keep backwards compatibility, values may be prefixed with 'r',
+// and opcodes may be lower case.
+
+
+//  Starter source code program for ECE 2504 Spring 2013
+//  Project 4
+//
+//  The on-line assembler is experimental and minimal.
+//  No guarantees are made about its correctness.
+//
+//  Formatting is also strict:
+//  The first two characters of a comment line must be //
+//  Lines with instructions on them should not have comments.
+//
+//  Add your header comments (name, date, etc.) here.
+//
+//
+//  Do not change the following segment of code from here
+//  to the comment "CHANGE HERE" below.
+ldi r0, 7
+adi r0, r0, 6
+jmp r0
+// The following set of load instructions
+// read the final values of the variables in
+// memory locations 2-5 into r1-r5 so that we
+// can see them on the LEDs
+// Your code must jump to this point after it has
+// stored the results in data memory. You should jump
+// to location 3.
+ldi r1, 2
+ld r2, r1
+inc r1, r1
+ld r3, r1
+inc r1, r1
+ld r4, r1
+inc r1, r1
+ld r5, r1
+// Now loop forever
+ldi r0, 0
+// The address of this brz is the one used in validation: Address C.
+brz r0, 0
+// You are permitted to add code after this point
+// CHANGE HERE and beyond
+// Your last instruction should be a jump to location 3
+// in order to read the variables into registers r2-r5.
+ldi r0, 3
+jmp r0
+</textarea>
+<button id="btn_load">Load</button>
+
+<pre id="warnings"></pre>
+
+<h2>(dis)assembler output</h2>
+<div id="code_out"></div>
+<div id="settings">
+	<fieldset name="radix">
+		<h3>Offset Radix</h3>
+		<label><input type="radio" name="radix" value="10" class="out_radio" checked />Decimal</label>
+		<label><input type="radio" name="radix" value="16" class="out_radio" />Hexadecimal</label>
+	</fieldset>
+	<fieldset name="source">
+		<h3>Comment Source</h3>
+		<label><input type="radio" name="source" value="literal" class="out_radio" checked />Source code</label>
+		<label><input type="radio" name="source" value="assembly" class="out_radio" />Assembly</label>
+	</fieldset>
+</div>
+
+<h2>Simulation &mdash; <span style="color: #bb0000;">implementation not yet finished</span></h2>
+<button id="btn_run" disabled="true">Run</button>
+<table id="sim_out">
+</table>
+
+</body>
+</html>
