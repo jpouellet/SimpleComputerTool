@@ -140,7 +140,7 @@ function makeTables() {
 		default:
 			comment.textContent = "Invalid Source Type!";
 		}
-		comment.innerHTML = "<span>#</span>" + comment.innerHTML;
+		comment.innerHTML = "<span>//</span>" + comment.innerHTML;
 
 		tr.appendChild(bytecode);
 		tr.appendChild(comment);
