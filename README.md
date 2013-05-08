@@ -33,6 +33,9 @@ Values are given in C-style syntax:
 * `1984` for base 10
 * `\007` for base 8
 
+with an optional `-` after the radix specifier prefix to denote a negative
+value.
+
 Additional whitespace is allowed anywhere.
 
 To keep backwards compatibility, values may be prefixed with 'r',

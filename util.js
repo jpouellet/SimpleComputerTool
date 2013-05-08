@@ -47,6 +47,6 @@ function cStyleParseInt(str) {
  * function because the compiled versions should really be cached and not keep
  * falling out of scope and getting garbage collected and then recomputed again.
  */
-cStyleParseInt.hex = new RegExp("^0x([0-9a-fA-F]+)$");
-cStyleParseInt.dec = new RegExp("^([0-9]+)$");
-cStyleParseInt.oct = new RegExp("^\\\\([0-7]+)$");
+cStyleParseInt.hex = new RegExp("^0x(-?[0-9a-fA-F]+)$");
+cStyleParseInt.dec = new RegExp("^(-?[0-9]+)$");
+cStyleParseInt.oct = new RegExp("^\\\\(-?[0-7]+)$");
