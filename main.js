@@ -186,7 +186,11 @@ window.addEventListener("load", function() {
 		 * were working on!)
 		 */
 		if (event.keyCode === 82 && (event.ctrlDown || event.metaKey)) {
-			loadCode();
+			try {
+				loadCode();
+			} catch (err) {
+				warn(err.message);
+			}
 			event.preventDefault();
 		}
 	});
