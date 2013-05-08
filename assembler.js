@@ -336,9 +336,9 @@ Program.prototype = {
 	commentRemovalPattern: new RegExp("(?:#|//).*"),
 	commentPattern: new RegExp("^(?:\\/\\/|#)\s*(.*)$"),
 	instructionPattern: (function() {
-		var hex = "0x-?[0-9a-fA-F]+";
+		var hex = "-?0x[0-9a-fA-F]+";
 		var dec = "-?[0-9]+";
-		var oct = "\\\\-?[0-7]+";
+		var oct = "-?\\\\[0-7]+";
 		var label = "[a-zA-Z\\._][0-9a-zA-Z\\._]*";
 		var arg = "r?("+hex+"|"+dec+"|"+oct+"|"+label+")";
 		var optarg = "(?:,\\s+"+arg+")?";

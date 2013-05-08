@@ -27,15 +27,15 @@ Array.prototype.sliceDefined = function(start) {
 function cStyleParseInt(str) {
 	var hex = cStyleParseInt.hex.exec(str);
 	if (hex)
-		return parseInt(hex[1], 16);
+		return parseInt(hex[2], 16) * (hex[1] === "-" ? -1 : 1);
 
 	var dec = cStyleParseInt.dec.exec(str);
 	if (dec)
-		return parseInt(dec[1], 10);
+		return parseInt(dec[2], 10) * (dec[1] === "-" ? -1 : 1);
 
 	var oct = cStyleParseInt.oct.exec(str);
 	if (oct)
-		return parseInt(oct[1], 8);
+		return parseInt(oct[2], 8) * (dec[1] === "-" ? -1 : 1);
 
 	warn("unable to parse C-style int \"" + str + "\"");
 
@@ -47,6 +47,6 @@ function cStyleParseInt(str) {
  * function because the compiled versions should really be cached and not keep
  * falling out of scope and getting garbage collected and then recomputed again.
  */
-cStyleParseInt.hex = new RegExp("^0x(-?[0-9a-fA-F]+)$");
-cStyleParseInt.dec = new RegExp("^(-?[0-9]+)$");
-cStyleParseInt.oct = new RegExp("^\\\\(-?[0-7]+)$");
+cStyleParseInt.hex = new RegExp("^(-?)0x([0-9a-fA-F]+)$");
+cStyleParseInt.dec = new RegExp("^(-?)([0-9]+)$");
+cStyleParseInt.oct = new RegExp("^(-?)\\\\([0-7]+)$");
