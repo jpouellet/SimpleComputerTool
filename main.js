@@ -79,6 +79,7 @@ function loadCode() {
 
 	if (myProgram === undefined) {
 		warn("Code interpretation failed!");
+		code_out.innerHTML = "";
 		return false;
 	}
 
