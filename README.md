@@ -33,14 +33,6 @@ Values are given in C-style syntax:
 * `1984` for base 10
 * `\007` for base 8
 
-Labels are defined like so:
-
-    somewhere:
-
-and can be referenced like so:
-
-    JMP somewhere
-
 Additional whitespace is allowed anywhere.
 
 To keep backwards compatibility, values may be prefixed with 'r',
