@@ -75,12 +75,18 @@ function loadCode() {
 		warning_box.textContent = "";
 	isFirstTime = false;
 
-	myProgram = new Program(code_in.value);
+	try {
+		myProgram = new Program(code_in.value);
+	} catch (e) {
+		var message = e.message;
 
-	if (myProgram === undefined) {
-		warn("Code interpretation failed!");
-		code_out.innerHTML = "";
-		return false;
+		if (e.hasOwnProperty("line")) {
+			message += " on line " + e.line;
+			selectLine(e.line);
+		}
+		warn(message);
+
+		myProgram = undefined;
 	}
 
 	makeTables();
@@ -95,6 +101,11 @@ function makeTables() {
 	 * but alas, they don't, so do a stupid ugly hack instead where we have
 	 * two side by side tables.
 	 */
+
+	if (myProgram === undefined) {
+		code_out.innerHTML = "";
+		return;
+	}
 
 	var output = document.createElement("div");
 	var offsets = document.createElement("table");

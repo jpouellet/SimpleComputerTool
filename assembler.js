@@ -30,12 +30,10 @@ function Instruction(representation) {
 			// sorry about > 80 chars, but it's uglier if i try to wrap it.
 			if (CPU[i] === undefined)
 				continue;
-			if (!CPU[i].mnemonic || !CPU[i].format) {
-				warn("operation " + i + " is not fully implemented. check cpu.js");
-				continue;
-			}
+			if (!CPU[i].mnemonic || !CPU[i].format)
+				throw {name: "InternalError", message: "operation " + i + " is not fully implemented. check cpu.js"};
 
-			if (CPU[i].mnemonic != asm[1])
+			if (CPU[i].mnemonic !== asm[1])
 				continue;
 
 			found = true;
@@ -47,10 +45,8 @@ function Instruction(representation) {
 			this.AD = undefined;
 
 			var args = asm.sliceDefined(2);
-			if (CPU[i].format.length != args.length) {
-				warn(CPU[i].mnemonic + " expects " + CPU[i].format.join(", ") + " but " + args.length + " arguments given");
-				return undefined;
-			}
+			if (CPU[i].format.length != args.length)
+				throw {name: "InternalError", message: CPU[i].mnemonic + " expects " + CPU[i].format.join(", ") + " but " + args.length + " arguments given"};
 
 			for (var j = 0; j < CPU[i].format.length; j++) {
 				// eww, repetition, but its somewhat unique per type, so idk how to do it better
@@ -58,66 +54,45 @@ function Instruction(representation) {
 				case "DR":
 					if (this.DR === undefined)
 						this.DR = cStyleParseInt(args[j]);
-					else {
-						warn("argument " + (j+1) + " has duplicate type " + CPU[i].format[j] + " in opcode " + i);
-						return undefined;
-					}
-					if (this.DR > 7 || this.DR < 0) {
-						warn("DR (argument " + (j+1) + ") is out of bounds (" + this.DR + ")");
-						return undefined;
-					}
+					else
+						throw {name: "InternalError", message: "argument " + (j+1) + " has duplicate type " + CPU[i].format[j] + " in opcode " + i};
+					if (this.DR > 7 || this.DR < 0)
+						throw {name: "RangeError", message: "DR (argument " + (j+1) + ") is out of bounds (" + this.DR + ")"};
 					break;
 				case "SA":
 					if (this.SA === undefined)
 						this.SA = cStyleParseInt(args[j]);
-					else {
-						warn("argument " + (j+1) + " has duplicate type " + CPU[i].format[j] + " in opcode " + i);
-						return undefined;
-					}
-					if (this.SA > 7 || this.SA < 0) {
-						warn("SA (argument " + (j+1) + ") is out of bounds (" + this.SA + ")");
-						return undefined;
-					}
+					else
+						throw {name: "InternalError", message: "argument " + (j+1) + " has duplicate type " + CPU[i].format[j] + " in opcode " + i};
+					if (this.SA > 7 || this.SA < 0)
+						throw {name: "RangeError", message: "SA (argument " + (j+1) + ") is out of bounds (" + this.SA + ")"};
 					break;
 				case "SB":
 					if (this.SB === undefined)
 						this.SB = cStyleParseInt(args[j]);
-					else {
-						warn("argument " + (j+1) + " has duplicate type " + CPU[i].format[j] + " in opcode " + i);
-						return undefined;
-					}
-					if (this.SB > 7 || this.SB < 0) {
-						warn("SB (argument " + (j+1) + ") is out of bounds (" + this.SB + ")");
-						return undefined;
-					}
+					else
+						throw {name: "InternalError", message: "argument " + (j+1) + " has duplicate type " + CPU[i].format[j] + " in opcode " + i};
+					if (this.SB > 7 || this.SB < 0)
+						throw {name: "RangeError", message: "SB (argument " + (j+1) + ") is out of bounds (" + this.SB + ")"};
 					break;
 				case "OP":
 					if (this.OP === undefined)
 						this.OP = cStyleParseInt(args[j]);
-					else {
-						warn("argument " + (j+1) + " has duplicate type " + CPU[i].format[j] + " in opcode " + i);
-						return undefined;
-					}
-					if (this.OP > 7 || this.OP < 0) {
-						warn("OP (argument " + (j+1) + ") is out of bounds (" + this.OP + ")");
-						return undefined;
-					}
+					else
+						throw {name: "InternalError", message: "argument " + (j+1) + " has duplicate type " + CPU[i].format[j] + " in opcode " + i};
+					if (this.OP > 7 || this.OP < 0)
+						throw {name: "RangeError", message: "OP (argument " + (j+1) + ") is out of bounds (" + this.OP + ")"};
 					break;
 				case "AD":
 					if (this.AD === undefined)
 						this.AD = cStyleParseInt(args[j]);
-					else {
-						warn("argument " + (j+1) + " has duplicate type " + CPU[i].format[j] + " in opcode " + i);
-						return undefined;
-					}
-					if (this.AD > 31 || this.AD < -32) { // i think this is right, but not 100% sure.
-						warn("AD (argument " + (j+1) + ") is out of bounds (" + this.AD + ")");
-						return undefined;
-					}
+					else
+						throw {name: "InternalError", message: "argument " + (j+1) + " has duplicate type " + CPU[i].format[j] + " in opcode " + i};
+					if (this.AD > 31 || this.AD < -32) // i think this is right, but not 100% sure.
+						throw {name: "RangeError", message: "AD (argument " + (j+1) + ") is out of bounds (" + this.AD + ")"};
 					break;
 				default:
-					warn("argument " + j + " has unknown type " + CPU[i].format[j] + " in opcode " + i);
-					return undefined;
+					throw {name: "InternalError", message: "argument " + j + " has unknown type " + CPU[i].format[j] + " in opcode " + i};
 				}
 			}
 
@@ -149,13 +124,10 @@ function Instruction(representation) {
 			}
 		}
 
-		if (!found) {
-			warn("unknown instruction: " + asm[1]);
-			return undefined;
-		}
+		if (!found)
+			throw {name: "InputError", message: "unknown instruction: " + asm[1]};
 	} else {
-		warn("unrecognized instruction format: " + representation);
-		return undefined;
+		throw {name: "InputError", message: "unrecognized instruction format: " + representation};
 	}
 }
 Instruction.prototype = {
@@ -182,7 +154,6 @@ Instruction.prototype = {
 			}
 			return v;
 		default:
-			warn("requested undefined operand: " + name);
 			return undefined;
 		}
 	},
@@ -194,7 +165,7 @@ Instruction.prototype = {
 		return str;
 	},
 
-	toAssemblyString: function(align) {
+	toAssemblyString: function(align, rPrefix) {
 		var instruction = CPU[this.getOpcodeValue()];
 		if (instruction === undefined)
 			return undefined;
@@ -208,11 +179,14 @@ Instruction.prototype = {
 			return undefined;
 
 		var values = format.map(function(op) {
-			return this.getOperandValue(op);
+			var val = this.getOperandValue(op);
+			if (rPrefix && (op === "DR" || op === "SA" || op === "SB"))
+				val = "r" + val;
+			return val;
 		}, this); // passing this shouldn't be necessary, but i hear it's broken in some browsers.
 
 		if (align)
-			while (mnemonic.length < 5)
+			while (mnemonic.length < 4)
 				mnemonic += " ";
 
 		return mnemonic + " " + values.join(", ");
@@ -235,7 +209,7 @@ function Program(source) {
 
 		var label = this.labelPattern.exec(line);
 		if (label != null)
-			this.labels[label[1]] = {line: pcIndex, used: false};
+			this.labels[label[1]] = {index: pcIndex, line: i, used: false};
 	}
 
 	if (!this.propertyIsEnumerable("labels"))
@@ -256,11 +230,11 @@ function Program(source) {
 			continue;
 
 		if (this.bytecodePattern.test(line)) {
-			var op = new Instruction(line);
-			if (op === undefined) {
-				warn("syntax error on line " + (i+1));
-				selectLine(i);
-				return undefined;
+			var op;
+			try {
+				op = new Instruction(line);
+			} catch (e) {
+				throw {name: "SyntaxError", message: "[" + e.name + "] " + e.message, line: i};
 			}
 			op.program = this;
 			op.sourceLine = i;
@@ -278,7 +252,7 @@ function Program(source) {
 			for (var label in this.labels) {
 				for (var j = 0; j < args.length; j++) {
 					if (args[j] === label) {
-						args[j] = this.labels[label].line;
+						args[j] = this.labels[label].index;
 						this.labels[label].used = true;
 					}
 				}
@@ -287,18 +261,15 @@ function Program(source) {
 			// make sure we dont have any undefined symbols
 			for (var j = 0; j < args.length; j++) {
 				args[j] = cStyleParseInt(args[j]);
-				if (args[j] === NaN) {
-					warn("syntax error on line " + (i+1) + ", argument " + (j+1) + " is invalid");
-					selectLine(i);
-					return undefined;
-				}
+				if (args[j] === NaN)
+					throw {name: "SyntaxError", message: "argument " + (j+1) + " is invalid", line: i};
 			}
 
-			var op = new Instruction(opcode + " " + args.join(", "));
-			if (op === undefined) {
-				warn("syntax error on line " + (i+1));
-				selectLine(i);
-				return undefined;
+			var op;
+			try {
+				op = new Instruction(opcode + " " + args.join(", "));
+			} catch (e) {
+				throw {name: "SyntaxError", message: "[" + e.name + "] " + e.message, line: i};
 			}
 			op.program = this;
 			op.sourceLine = i;
@@ -307,9 +278,7 @@ function Program(source) {
 			continue;
 		}
 
-		warn("syntax error on line " + i);
-		selectLine(i);
-		return undefined;
+		throw {name: "SyntaxError", message: "unknown instruction format", line: i};
 	}
 
 	// make sure we used all the labels
@@ -317,8 +286,9 @@ function Program(source) {
 	for (var label in this.labels) {
 		if (!this.labels[label].used) {
 			warn("unused label \"" + label + "\" on line " + this.labels[label].line);
+			selectLine(this.labels[label].line);
 			if (firstBadLine !== undefined)
-				firstBadLine = this.labels[label].line;
+				firstBadLine = this.labels[label].index;
 		}
 	}
 	if (firstBadLine !== undefined)
