@@ -182,6 +182,9 @@ window.addEventListener("load", function() {
 	sim_out = document.getElementById("sim_out");
 	warning_box = document.getElementById("warnings");
 
+	document.getElementById("btn_load").addEventListener('click', loadCode);
+	document.getElementById("btn_run").addEventListener('click', runSim);
+
 	document.addEventListener('keydown', function() {
 		/*
 		 * Make {control, command}+R just re-evaluate the code instead
