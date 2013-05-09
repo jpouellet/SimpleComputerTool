@@ -8,12 +8,22 @@
 var code_in;
 var code_out;
 var sim_out;
-var out_radios;
 var warning_box;
 
 var myProgram;
 
 function warn(string) {
+	if (string === undefined)
+		string = "[undefined]";
+	else if (string === null)
+		string = "[null]";
+	else if (string === Infinity)
+		string = "[Infinity]";
+	else if (string === -Infinity)
+		string = "[-Infinity]";
+	else if (string === NaN)
+		string = "[NaN]";
+
 	if (console && console.warn)
 		console.warn(string);
 	else if (console && console.log)
@@ -53,20 +63,6 @@ function selectLine(lineNumber) {
 	}
 
 	return true;
-}
-
-function getDesiredOffsetRadix() {
-	for (var i = 0; i < out_radios.length; i++)
-		if (out_radios[i].name === "radix" && out_radios[i].checked)
-			return parseInt(out_radios[i].value);
-	return 10;
-}
-
-function getDesiredCommentSource() {
-	for (var i = 0; i < out_radios.length; i++)
-		if (out_radios[i].name === "source" && out_radios[i].checked)
-			return out_radios[i].value;
-	return "literal";
 }
 
 var isFirstTime = true;
@@ -119,7 +115,7 @@ function makeTables() {
 	for (var i = 0; i < myProgram.instructions.length; i++) {
 		var tr = document.createElement("tr");
 		var td = document.createElement("td");
-		td.textContent = i.toString(getDesiredOffsetRadix());
+		td.textContent = i.toString(settings.get("radix"));
 		tr.appendChild(td);
 		offsets.appendChild(tr);
 	}
@@ -141,7 +137,7 @@ function makeTables() {
 		comment = document.createElement("td");
 
 		bytecode.textContent = instruction.toBytecodeString();
-		switch (getDesiredCommentSource()) {
+		switch (settings.get("source")) {
 		case "literal":
 			comment.textContent = instruction.source;
 			break;
@@ -179,17 +175,12 @@ function runSim() {
 }
 
 window.addEventListener("load", function() {
+	settings.init();
+
 	code_in = document.getElementById("code_in");
 	code_out = document.getElementById("code_out");
 	sim_out = document.getElementById("sim_out");
 	warning_box = document.getElementById("warnings");
-
-	document.getElementById("btn_load").addEventListener('click', loadCode);
-	document.getElementById("btn_run").addEventListener('click', runSim);
-
-	out_radios = document.getElementsByClassName("out_radio");
-	for (var i = 0; i < out_radios.length; i++)
-		out_radios[i].addEventListener("change", makeTables);
 
 	document.addEventListener('keydown', function() {
 		/*
@@ -205,7 +196,10 @@ window.addEventListener("load", function() {
 			}
 			event.preventDefault();
 		}
-	});
+	}, false);
 
 	loadCode();
-});
+
+	settings.registerHook("radix", makeTables);
+	settings.registerHook("source", makeTables);
+}, false);

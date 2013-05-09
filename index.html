@@ -7,6 +7,7 @@
 	<meta name="author" content="Jean-Philippe Ouellet" />
 
 	<script type="text/javascript" src="util.js"></script>
+	<script type="text/javascript" src="settings.js"></script>
 	<script type="text/javascript" src="cpu.js"></script>
 	<script type="text/javascript" src="assembler.js"></script>
 	<script type="text/javascript" src="simulator.js"></script>
@@ -90,13 +91,13 @@ jmp r0
 <div id="settings">
 	<fieldset name="radix">
 		<h3>Offset Radix</h3>
-		<label><input type="radio" name="radix" value="10" class="out_radio" checked />Decimal</label>
-		<label><input type="radio" name="radix" value="16" class="out_radio" />Hexadecimal</label>
+		<label><input type="radio" name="radix" value="10" checked />Decimal</label>
+		<label><input type="radio" name="radix" value="16" />Hexadecimal</label>
 	</fieldset>
 	<fieldset name="source">
 		<h3>Comment Source</h3>
-		<label><input type="radio" name="source" value="literal" class="out_radio" checked />Source code</label>
-		<label><input type="radio" name="source" value="assembly" class="out_radio" />Assembly</label>
+		<label><input type="radio" name="source" value="literal" checked />Source code</label>
+		<label><input type="radio" name="source" value="assembly" />Assembly</label>
 	</fieldset>
 </div>
 

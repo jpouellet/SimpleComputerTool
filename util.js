@@ -18,6 +18,17 @@ Array.prototype.sliceDefined = function(start) {
 };
 
 /*
+ * Pretty self explanatory.
+ */
+Element.prototype.recurse = function(callback, useAsThis) {
+	if (this.children)
+		for (var i = 0; i < this.children.length; i++)
+			if (this.children[i].recurse)
+				this.children[i].recurse(callback, useAsThis);
+	callback.call(useAsThis !== undefined ? useAsThis : this, this);
+}
+
+/*
  * Insert String.prototype vs window namespace debate here.
  * I'm putting it here because parseInt and parseFloat are in the window
  * namespace and the only .toWhatever() on String.prototype are .toUpperCase()
