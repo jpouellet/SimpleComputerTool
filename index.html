@@ -89,15 +89,20 @@ jmp r0
 <h2>(dis)assembler output</h2>
 <div id="code_out"></div>
 <div id="settings">
-	<fieldset name="radix">
+	<fieldset>
 		<h3>Offset Radix</h3>
 		<label><input type="radio" name="radix" value="10" checked />Decimal</label>
 		<label><input type="radio" name="radix" value="16" />Hexadecimal</label>
 	</fieldset>
-	<fieldset name="source">
+	<fieldset>
 		<h3>Comment Source</h3>
 		<label><input type="radio" name="source" value="literal" checked />Source code</label>
 		<label><input type="radio" name="source" value="assembly" />Assembly</label>
+	</fieldset>
+	<fieldset id="asm_opts">
+		<h3>Assembly Options</h3>
+		<label><input type="checkbox" name="r_prefix" checked />Prefix registers</label>
+		<label><input type="checkbox" name="align_ops" checked />Align operands</label>
 	</fieldset>
 </div>
 

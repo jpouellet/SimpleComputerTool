@@ -142,7 +142,7 @@ function makeTables() {
 			comment.textContent = instruction.source;
 			break;
 		case "assembly":
-			comment.textContent = instruction.toAssemblyString();
+			comment.textContent = instruction.toAssemblyString(settings.get("align_ops"), settings.get("r_prefix"));
 			break;
 		default:
 			comment.textContent = "Invalid Source Type!";
@@ -202,4 +202,15 @@ window.addEventListener("load", function() {
 
 	settings.registerHook("radix", makeTables);
 	settings.registerHook("source", makeTables);
+	settings.registerHook("r_prefix", makeTables);
+	settings.registerHook("align_ops", makeTables);
+
+	// Hide the extra assembly options when they're not applicable.
+	settings.registerHook("source", function(val) {
+		var opts = document.getElementById("asm_opts");
+		if (val === "assembly")
+			opts.style.display = "inline-block";
+		else
+			opts.style.display = "none";
+	});
 }, false);

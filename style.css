@@ -44,6 +44,7 @@ th {
 #code_out td {
 	padding-left: 10px;
 	font-family: monospace;
+	white-space: pre;
 }
 
 #code_out table:first-child td {
@@ -67,6 +68,10 @@ fieldset {
 	border: 1px solid #7f7f7f;
 	padding: 3px;
 	display: inline-block;
+}
+
+#asm_opts {
+	display: none;
 }
 
 label {

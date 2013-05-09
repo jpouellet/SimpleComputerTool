@@ -16,7 +16,7 @@ window.settings = {
 					if (elem.type === "radio")
 						settings.reload();
 					else
-						settings.loadFromElem(event.target);
+						settings.loadFromElement(elem);
 
 					if (settings.hooks.hasOwnProperty(elem.name)) {
 						for (var i = 0; i < settings.hooks[elem.name].length; i++)
@@ -38,17 +38,17 @@ window.settings = {
 		this.values = {};
 		document.getElementById("settings").recurse(function(elem) {
 			if (elem.tagName === "INPUT") {
-				this.loadFromElem(elem);
+				this.loadFromElement(elem, true);
 			}
 		}, this);
 	},
 
-	loadFromElem: function(elem) {
+	loadFromElement: function(elem, isInitialLoad) {
 		if (!elem.name || !elem.value)
 			return;
 
 		if (this.values.hasOwnProperty(elem.name)) {
-			if (elem.type !== "radio")
+			if (elem.type !== "radio" && isInitialLoad)
 				warn("multiple input elements with name \"" + elem.name + "\"");
 		} else {
 			this.values[elem.name] = null;
