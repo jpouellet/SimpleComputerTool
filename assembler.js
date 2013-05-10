@@ -191,6 +191,10 @@ Instruction.prototype = {
 
 		return mnemonic + " " + values.join(", ");
 	},
+
+	getArgValueArray: function() {
+		return CPU[this.getOpcodeValue()].format.map(function(op) {return this.getOperandValue(op);}, this);
+	}
 };
 
 function Program(source) {

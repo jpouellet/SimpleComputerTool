@@ -43,5 +43,5 @@ and opcodes may be lower case.
 
 ## Notes
 
-The simulator isn't fully implemented yet, but most of the needed underlaying
-functionality is there.
+The simulator works but would probably need some optimization for use with
+larger programs.

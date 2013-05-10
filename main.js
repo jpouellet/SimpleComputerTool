@@ -11,6 +11,7 @@ var sim_out;
 var warning_box;
 
 var myProgram;
+var mySimulation;
 
 function warn(string) {
 	if (string === undefined)
@@ -85,10 +86,26 @@ function loadCode() {
 		myProgram = undefined;
 	}
 
-	makeTables();
+	makeOutputTable();
 }
 
 function makeTables() {
+	makeSimulationTable();
+	makeOutputTable();
+}
+
+function makeSimulationTable() {
+	var results = mySimulation.getTable();
+
+	if (results !== undefined) {
+		sim_out.id = "";
+		results.id = "sim_out";
+		sim_out.parentNode.replaceChild(results, sim_out);
+		sim_out = results;
+	}
+}
+
+function makeOutputTable() {
 	/*
 	 * I want to show the offset to the left of the instruction, but not
 	 * have it selected.
@@ -169,7 +186,11 @@ function runSim() {
 		return false;
 	}
 
-	warn("Simulator not finished yet...");
+	mySimulation = new Simulation(myProgram);
+
+	mySimulation.run();
+
+	makeSimulationTable();
 
 	return true;
 }
@@ -207,13 +228,4 @@ window.addEventListener("load", function() {
 	settings.registerHook("source", makeTables);
 	settings.registerHook("r_prefix", makeTables);
 	settings.registerHook("align_ops", makeTables);
-
-	// Hide the extra assembly options when they're not applicable.
-	settings.registerHook("source", function(val) {
-		var opts = document.getElementById("asm_opts");
-		if (val === "assembly")
-			opts.style.display = "inline-block";
-		else
-			opts.style.display = "none";
-	});
 }, false);

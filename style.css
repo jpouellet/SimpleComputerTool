@@ -70,10 +70,6 @@ fieldset {
 	display: inline-block;
 }
 
-#asm_opts {
-	display: none;
-}
-
 label {
 	display: block;
 }
@@ -81,4 +77,15 @@ label {
 h3 {
 	font-size: 12pt;
 	margin: 0px;
+}
+
+#sim_out td {
+	padding: 0px 10px 0px 10px;
+	text-align: right;
+	font-family: monospace;
+	white-space: pre;
+}
+
+#sim_out td:nth-child(2) {
+	text-align: left;
 }
