@@ -25,7 +25,7 @@ Element.prototype.recurse = function(callback, useAsThis) {
 		for (var i = 0; i < this.children.length; i++)
 			if (this.children[i].recurse)
 				this.children[i].recurse(callback, useAsThis);
-	callback.call(useAsThis !== undefined ? useAsThis : this, this);
+	callback.call(useAsThis || this, this);
 }
 
 /*
