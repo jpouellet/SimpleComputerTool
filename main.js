@@ -223,6 +223,7 @@ window.addEventListener("load", function() {
 	}, false);
 
 	loadCode();
+	runSim();
 
 	settings.registerHook("radix", makeTables);
 	settings.registerHook("source", makeTables);
