@@ -10,8 +10,8 @@ You can download the figues and tables from the chapter here:
 
 I wrote this for Virginia Tech's ECE-2504 class. We had a homework assignment
 in which we had to write a bit of assembly, but the provided assembler for the
-processor we had to use was very rudimentary. So, instead of just deal with it
-and do the homework like everybody else, I first wrote a better assembler.
+processor we had to use was very rudimentary. So, instead of just dealing with
+it and getting my homework done, I first wrote a better assembler.
 
 ## Assembly Format
 
